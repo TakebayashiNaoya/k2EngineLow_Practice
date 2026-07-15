@@ -1,9 +1,9 @@
-#include "k2EngineLowPreCompile.h"
+Ôªø#include "k2EngineLowPreCompile.h"
 #include "Physics.h"
 
 using namespace std;
 namespace nsK2EngineLow {
-	PhysicsWorld* PhysicsWorld::m_instance = nullptr;	//óBàÍÇÃÉCÉìÉXÉ^ÉìÉXÅB
+	PhysicsWorld* PhysicsWorld::m_instance = nullptr;	//ÂîØ‰∏Ä„ÅÆ„Ç§„É≥„Çπ„Çø„É≥„Çπ„ÄÇ
 
 	namespace {
 		struct MyContactResultCallback : public btCollisionWorld::ContactResultCallback {
@@ -37,7 +37,7 @@ namespace nsK2EngineLow {
 			btScalar	addSingleResult(btCollisionWorld::LocalRayResult& rayResult, bool normalInWorldSpace) override			
 			{
 				if (rayResult.m_hitFraction < hitFraction) {
-					// Ç±ÇøÇÁÇÃï˚Ç™ãﬂÇ¢ÅB
+					// „Åì„Å°„Çâ„ÅÆÊñπ„ÅåËøë„ÅÑ„ÄÇ
 					hitPos.Lerp(rayResult.m_hitFraction, rayStart, rayEnd);
 				}
 				isHit = true;
@@ -80,7 +80,7 @@ namespace nsK2EngineLow {
 	{
 		K2_ASSERT(
 			m_instance == nullptr,
-			"PhysisWorldÇÃÉCÉìÉXÉ^ÉìÉXÇï°êîçÏÇÈÇ±Ç∆ÇÕÇ≈Ç´Ç‹ÇπÇÒÅB"
+			"PhysisWorld„ÅÆ„Ç§„É≥„Çπ„Çø„É≥„Çπ„ÇíË§áÊï∞‰Ωú„Çã„Åì„Å®„ÅØ„Åß„Åç„Åæ„Åõ„Çì„ÄÇ"
 		);
 		Init();
 	}
@@ -102,7 +102,7 @@ namespace nsK2EngineLow {
 	{
 		Release();
 
-		//ï®óùÉGÉìÉWÉìÇèâä˙âªÅB
+		//Áâ©ÁêÜ„Ç®„É≥„Ç∏„É≥„ÇíÂàùÊúüÂåñ„ÄÇ
 		///collision configuration contains default setup for memory, collision setup. Advanced users can create their own configuration.
 		m_collisionConfig = make_unique<btDefaultCollisionConfiguration>();
 
@@ -125,7 +125,7 @@ namespace nsK2EngineLow {
 		m_dynamicWorld->setGravity(btVector3(0, -10, 0));
 
 #ifdef _DEBUG
-		//ÉfÉoÉbÉOÉèÉCÉÑÅ[ÉtÉåÅ[ÉÄÇèâä˙âªÅB
+		//„Éá„Éê„ÉÉ„Ç∞„ÉØ„Ç§„É§„Éº„Éï„É¨„Éº„É†„ÇíÂàùÊúüÂåñ„ÄÇ
 		m_debugWireFrame.Init();
 		m_dynamicWorld->setDebugDrawer(&m_debugWireFrame);
 #endif

@@ -1,5 +1,11 @@
 ﻿#pragma once
 
+// --- Step 1-5 : ライティング① アンビエント（環境光） --- //
+struct AmbientLightCB
+{
+	Vector4 ambientColor=Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+};
+
 
 class ModelRender
 {
@@ -32,5 +38,8 @@ private:
 	Quaternion rotation_;  /** 回転 */
 
 	Model	   model_;	   /** モデル */
+
+	// --- Step 1-5 : ライティング① アンビエント（環境光） --- //
+	AmbientLightCB constantBuffer_; /** 定数バッファ */
 };
 

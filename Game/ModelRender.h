@@ -9,6 +9,9 @@ struct LightCB
 	// --- Step 1-6 : ライティング② ディフューズ（拡散反射） --- //
 	Vector4 DirectionalLightColor = Vector4(0.5, 0.5, 0.5, 1.0f);
 	Vector3 lightDirection = Vector3(1.0f, 0.0f, 0.0f);
+
+	// --- Step 1-7 : ライティング③ スペキュラ（鏡面反射） --- //
+	Vector3 cameraPosition = g_camera3D->GetPosition();
 };
 
 

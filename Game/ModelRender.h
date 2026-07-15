@@ -1,9 +1,14 @@
 ﻿#pragma once
 
-// --- Step 1-5 : ライティング① アンビエント（環境光） --- //
-struct AmbientLightCB
+
+struct LightCB
 {
+	// --- Step 1-5 : ライティング① アンビエント（環境光） --- //
 	Vector4 ambientColor=Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+
+	// --- Step 1-6 : ライティング② ディフューズ（拡散反射） --- //
+	Vector4 DirectionalLightColor = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+	Vector3 lightDirection = Vector3(1.0f, 0.0f, 0.0f);
 };
 
 
@@ -40,6 +45,6 @@ private:
 	Model	   model_;	   /** モデル */
 
 	// --- Step 1-5 : ライティング① アンビエント（環境光） --- //
-	AmbientLightCB constantBuffer_; /** 定数バッファ */
+	LightCB lightCB_; /** 定数バッファ */
 };
 

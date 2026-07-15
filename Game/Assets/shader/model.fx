@@ -17,6 +17,11 @@
  *       k2Engine's job, which you are now replacing).
  */
 
+cbuffer AmbientLightCB : register(b1)
+{
+    float4 ambientColor; // Ambient light color (RGB) and intensity (A).
+};
+
 ////////////////////////////////////////////////
 // Pixel shader input.
 ////////////////////////////////////////////////
@@ -85,8 +90,8 @@ float4 PSMain(SPSIn In) : SV_Target0
     float4 albedoColor = albedoTexture.Sample(Sampler, In.uv);
 
     // TODO: add lighting. For example, start with ambient:
-    //   float3 ambient = float3(0.3, 0.3, 0.3);
-    //   albedoColor.xyz *= ambient;
+    float3 ambient = ambientColor.rgb * ambientColor.a;
+    albedoColor.xyz *= ambient;
 
     return albedoColor;
 }

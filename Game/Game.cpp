@@ -43,8 +43,8 @@ void Game::Update()
 
 	// Step 1-4 : `ModelRender` を自作する
 	{
-		modelRender_.SetPosition(time_ * 100.0f, 0.0f, 0.0f);
-		modelRender_.SetScale(1.0f + time_, 1.0f + time_, 1.0f + time_);
+		modelRender_.SetPosition(0.0f, 0.0f, 0.0f);
+		modelRender_.SetScale(1.0f , 1.0f, 1.0f);
 		Quaternion rotation;
 		rotation.SetRotationDegY(time_ * 360.0f);
 		modelRender_.SetRotation(rotation);

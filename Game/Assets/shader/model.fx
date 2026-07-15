@@ -17,9 +17,14 @@
  *       k2Engine's job, which you are now replacing).
  */
 
-cbuffer AmbientLightCB : register(b1)
+cbuffer LightCB : register(b1)
 {
-    float4 ambientColor; // Ambient light color (RGB) and intensity (A).
+    // --- Step 1-5 : ライティング① アンビエント（環境光） --- //
+    float4 ambientColor;
+    
+    // --- Step 1-6 : ライティング② ディフューズ（拡散反射） --- //
+    float4 DirectionalLightColor;
+    float3 lightDirection;
 };
 
 ////////////////////////////////////////////////
@@ -90,8 +95,14 @@ float4 PSMain(SPSIn In) : SV_Target0
     float4 albedoColor = albedoTexture.Sample(Sampler, In.uv);
 
     // TODO: add lighting. For example, start with ambient:
+    // --- Step 1-5 : ライティング① アンビエント（環境光） --- //
     float3 ambient = ambientColor.rgb * ambientColor.a;
     albedoColor.xyz *= ambient;
+    
+    // --- Step 1-6 : ライティング② ディフューズ（拡散反射） --- //
+    float power = max(normalize(dot(In.normal, lightDirection * -1.0f)), 0.0f);
+    float directionalLightColor = DirectionalLightColor.rgb * DirectionalLightColor.a * power;
+    albedoColor.xyz *= directionalLightColor ;
 
     return albedoColor;
 }

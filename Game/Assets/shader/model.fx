@@ -102,7 +102,7 @@ float4 PSMain(SPSIn In) : SV_Target0
     // --- Step 1-6 : ライティング② ディフューズ（拡散反射） --- //
     float power = max(normalize(dot(In.normal, lightDirection * -1.0f)), 0.0f);
     float directionalLightColor = DirectionalLightColor.rgb * DirectionalLightColor.a * power;
-    albedoColor.xyz *= directionalLightColor ;
+    albedoColor.xyz += directionalLightColor ;
 
     return albedoColor;
 }

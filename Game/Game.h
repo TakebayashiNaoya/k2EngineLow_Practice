@@ -1,4 +1,6 @@
 ﻿#pragma once
+#include "SpriteRender.h"
+
 
 // The starting point of your game.
 // This is a plain IGameObject running on K2EngineLow only.
@@ -13,6 +15,9 @@ public:
 	void Update();
 	void Render(RenderContext& rc);
 
+
 private:
-	Sprite sprite_;
+	SpriteRender spriteRender_;  /** スプライトレンダー */
+
+	float time_ = 0.0f;  /** 時間の経過を管理する変数 */
 };

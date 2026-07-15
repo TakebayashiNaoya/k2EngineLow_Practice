@@ -4,20 +4,30 @@
 
 bool Game::Start()
 {
-	SpriteInitData initData;
-	initData.m_ddsFilePath[0] = "Assets/modelData/ground.DDS";
-	initData.m_fxFilePath = "Assets/shader/sprite.fx";
-	initData.m_width = 512;
-	initData.m_height = 512;
-	sprite_.Init(initData);
+	spriteRender_.Init("Assets/modelData/ground.dds", 100.0f, 100.0f);
 	return true;
 }
 
+
 void Game::Update()
 {
+	time_ += 0.01f;
+	if (time_ > 1.0f)
+	{
+		time_ = 0.0f;
+	}
+
+	spriteRender_.SetPosition(time_*500, time_*500);
+	spriteRender_.SetScale(1.0f + time_, 1.0f + time_);
+	Quaternion rotation;
+	rotation.SetRotationDegZ(time_ * 360.0f);
+	spriteRender_.SetRotation(rotation);
+
+	spriteRender_.Update();
 }
+
 
 void Game::Render(RenderContext& rc)
 {
-	sprite_.Draw(rc);
+	spriteRender_.Draw(rc);
 }

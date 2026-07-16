@@ -20,14 +20,16 @@
 cbuffer LightCB : register(b1)
 {
     // --- Step 1-5 : ライティング① アンビエント（環境光） --- //
-    float4 ambientColor;
-    
+    float3 ambientColor;
+    float pad1;
     // --- Step 1-6 : ライティング② ディフューズ（拡散反射） --- //
-    float4 DirectionalLightColor;
+    float3 DirectionalLightColor;
+    float pad2;
     float3 lightDirection;
-    
+    float pad3;
     // --- Step 1-7 : ライティング③ スペキュラ（鏡面反射） --- //
     float3 cameraPosition;
+    float pad4;
 };
 
 ////////////////////////////////////////////////
@@ -56,6 +58,7 @@ struct SPSIn
 // (t1 = normal map, t2 = metallic/smooth — you can add them when you need them.)
 ///////////////////////////////////////
 Texture2D<float4> albedoTexture : register(t0);
+Texture2D<float4> specularMap : register(t2);
 sampler Sampler : register(s0);
 
 ////////////////////////////////////////////////
@@ -96,16 +99,16 @@ SPSIn VSMainCore(SVSIn vsIn, float4x4 mWorldLocal, uniform bool isUsePreComputed
 float4 PSMain(SPSIn In) : SV_Target0
 {
     float4 albedoColor = albedoTexture.Sample(Sampler, In.uv);
-    float4 lig;
+    float3 lig;
 
     // TODO: add lighting. For example, start with ambient:
     // --- Step 1-5 : ライティング① アンビエント（環境光） --- //
-    float4 ambientLightColor = ambientColor * ambientColor.a;
+    float3 ambientLightColor = ambientColor;
     //albedoColor.xyz *= ambient;
     
     // --- Step 1-6 : ライティング② ディフューズ（拡散反射） --- //
     float power = max(normalize(dot(In.normal, lightDirection * -1.0f)), 0.0f);
-    float4 directionalLightColor = DirectionalLightColor * DirectionalLightColor.a * power;
+    float3 directionalLightColor = DirectionalLightColor * power;
     //lig = ambient + directionalLightColor;
     //albedoColor *= lig;
     
@@ -113,9 +116,13 @@ float4 PSMain(SPSIn In) : SV_Target0
     float3 reflectDir = reflect(lightDirection, In.normal);
     float3 toCamera = normalize(cameraPosition - In.worldPos);
     float t = pow(max(dot(toCamera, reflectDir), 0.0f), 1.0f);
-    float4 specular = DirectionalLightColor * DirectionalLightColor.a * t;
+    
+    // --- Step 1-8 : スペキュラマップ --- //
+    float4 specMap = specularMap.Sample(Sampler, In.uv);
+    float3 specular = DirectionalLightColor * t * specMap.xyz;
+    
     lig = ambientLightColor + directionalLightColor + specular;
-    albedoColor *= lig;
+    albedoColor.xyz *= lig;
 
     return albedoColor;
 }

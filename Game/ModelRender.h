@@ -4,14 +4,16 @@
 struct LightCB
 {
 	// --- Step 1-5 : ライティング① アンビエント（環境光） --- //
-	Vector4 ambientColor=Vector4(0.5f, 0.5f, 0.5f, 1.0f);
-
+	Vector3 ambientColor=Vector3(0.5f, 0.5f, 0.5f);
+	float pad1;
 	// --- Step 1-6 : ライティング② ディフューズ（拡散反射） --- //
-	Vector4 DirectionalLightColor = Vector4(0.5, 0.5, 0.5, 1.0f);
+	Vector3 DirectionalLightColor = Vector3(0.5, 0.5, 0.5);
+	float pad2;
 	Vector3 lightDirection = Vector3(1.0f, 0.0f, 0.0f);
-
+	float pad3;
 	// --- Step 1-7 : ライティング③ スペキュラ（鏡面反射） --- //
 	Vector3 cameraPosition = g_camera3D->GetPosition();
+	float pad4;
 };
 
 
